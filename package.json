@@ -1,0 +1,34 @@
+{
+  "name": "pi-multilang-alias",
+  "version": "0.1.0",
+  "description": "Multilingual and keyboard-layout aliases for Pi commands",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "multilingual",
+    "keyboard-layout",
+    "command-alias"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyein-cbio/pi-multilang-alias.git"
+  },
+  "homepage": "https://github.com/hyein-cbio/pi-multilang-alias",
+  "bugs": {
+    "url": "https://github.com/hyein-cbio/pi-multilang-alias/issues"
+  },
+  "files": [
+    "extensions",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/pi-multilang-alias/index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
