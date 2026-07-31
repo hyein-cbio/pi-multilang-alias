@@ -20,6 +20,33 @@ export default function (pi: ExtensionAPI) {
     ...ko2SetAliases,
     ...ko3FinalAliases,
   ] as AliasGroup[];
+  const aliasNames = new Set(aliases.flatMap((group) => group.aliases));
+
+  pi.on("session_start", (_event, ctx) => {
+    if (ctx.mode !== "tui") return;
+
+    ctx.ui.addAutocompleteProvider((current) => ({
+      triggerCharacters: current.triggerCharacters,
+      async getSuggestions(lines, cursorLine, cursorCol, options) {
+        const suggestions = await current.getSuggestions(lines, cursorLine, cursorCol, options);
+        if (!suggestions || suggestions.prefix !== "/") return suggestions;
+
+        return {
+          ...suggestions,
+          items: suggestions.items.filter((item) => {
+            const commandName = item.value.replace(/:\d+$/, "");
+            return !aliasNames.has(commandName);
+          }),
+        };
+      },
+      applyCompletion(lines, cursorLine, cursorCol, item, prefix) {
+        return current.applyCompletion(lines, cursorLine, cursorCol, item, prefix);
+      },
+      shouldTriggerFileCompletion(lines, cursorLine, cursorCol) {
+        return current.shouldTriggerFileCompletion?.(lines, cursorLine, cursorCol) ?? true;
+      },
+    }));
+  });
 
   for (const group of aliases) {
     for (const alias of group.aliases) {

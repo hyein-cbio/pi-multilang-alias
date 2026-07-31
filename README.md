@@ -43,7 +43,7 @@ Examples:
 /벼ㅑㅅ -> /quit       # Korean two-set layout
 ```
 
-All supported aliases are registered when the extension loads, so they are available to Pi's command autocomplete. The active input environment is detected again when an alias is invoked, allowing the current input source to change during a Pi session.
+All supported aliases are registered when the extension loads. Aliases stay out of the generic menu shown for `/`, but appear in autocomplete after you start typing one (for example, `/모` or `/벼`). The active input environment is detected again when an alias is invoked, allowing the current input source to change during a Pi session.
 
 ## Detection and test overrides
 
