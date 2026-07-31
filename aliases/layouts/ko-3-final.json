@@ -1,0 +1,32 @@
+[
+  {
+    "aliases": ["ㅎ치ㅕㅈ"],
+    "target": "model",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅐㅕㅈㅊㅇㅣ"],
+    "target": "reload",
+    "strategy": "api"
+  },
+  {
+    "aliases": ["ㄴㅕㄴㄴㅁㅊㅅ"],
+    "target": "session",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅅㄷ머"],
+    "target": "quit",
+    "strategy": "api"
+  },
+  {
+    "aliases": ["ㅐㅕㄴㄷ혀"],
+    "target": "resume",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅔㅊㅎㅍㅇㅔㅓ-ㅓㅐㅇㅅㄴㅔㅐㅁ퍼"],
+    "target": "compact-transcript",
+    "strategy": "prefill"
+  }
+]

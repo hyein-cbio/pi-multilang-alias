@@ -1,0 +1,32 @@
+[
+  {
+    "aliases": ["模型"],
+    "target": "model",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["重载", "重新加载"],
+    "target": "reload",
+    "strategy": "api"
+  },
+  {
+    "aliases": ["会话"],
+    "target": "session",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["退出"],
+    "target": "quit",
+    "strategy": "api"
+  },
+  {
+    "aliases": ["恢复", "继续"],
+    "target": "resume",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["紧凑转录"],
+    "target": "compact-transcript",
+    "strategy": "prefill"
+  }
+]

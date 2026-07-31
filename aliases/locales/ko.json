@@ -1,0 +1,22 @@
+[
+  {
+    "aliases": ["모델"],
+    "target": "model",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["세션"],
+    "target": "session",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["종료"],
+    "target": "quit",
+    "strategy": "api"
+  },
+  {
+    "aliases": ["계속"],
+    "target": "resume",
+    "strategy": "prefill"
+  }
+]
