@@ -2,6 +2,7 @@
   "name": "pi-multilang-alias",
   "version": "0.1.1",
   "description": "Multilingual and keyboard-layout aliases for Pi commands",
+  "type": "module",
   "keywords": [
     "pi-package",
     "pi-extension",
@@ -10,6 +11,10 @@
     "command-alias"
   ],
   "license": "MIT",
+  "scripts": {
+    "test": "node --test test/config.test.ts",
+    "check": "npm test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hyein-cbio/pi-multilang-alias.git"
