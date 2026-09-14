@@ -5,6 +5,26 @@
     "strategy": "prefill"
   },
   {
+    "aliases": ["소ㅑㅜㅏㅑㅜㅎ"],
+    "target": "thinking",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㄴㄷㅅ샤ㅜㅎㄴ"],
+    "target": "settings",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["채ㅡㅔㅁㅊㅅ"],
+    "target": "compact",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅜㄷㅈ"],
+    "target": "new",
+    "strategy": "prefill"
+  },
+  {
     "aliases": ["ㄱ디ㅐㅁㅇ"],
     "target": "reload",
     "strategy": "api"
@@ -22,11 +42,6 @@
   {
     "aliases": ["ㄱㄷ녀ㅡㄷ"],
     "target": "resume",
-    "strategy": "prefill"
-  },
-  {
-    "aliases": ["채ㅡㅔㅁㅊㅅ-ㅅㄱ문ㅊ갸ㅔㅅ"],
-    "target": "compact-transcript",
     "strategy": "prefill"
   }
 ]

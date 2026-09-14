@@ -5,6 +5,26 @@
     "strategy": "prefill"
   },
   {
+    "aliases": ["思考"],
+    "target": "thinking",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["设置"],
+    "target": "settings",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["压缩"],
+    "target": "compact",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["新建"],
+    "target": "new",
+    "strategy": "prefill"
+  },
+  {
     "aliases": ["重载", "重新加载"],
     "target": "reload",
     "strategy": "api"
@@ -22,11 +42,6 @@
   {
     "aliases": ["恢复", "继续"],
     "target": "resume",
-    "strategy": "prefill"
-  },
-  {
-    "aliases": ["紧凑转录"],
-    "target": "compact-transcript",
     "strategy": "prefill"
   }
 ]

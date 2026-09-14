@@ -5,6 +5,31 @@
     "strategy": "prefill"
   },
   {
+    "aliases": ["추론"],
+    "target": "thinking",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["세팅"],
+    "target": "settings",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["콤팩트"],
+    "target": "compact",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["새로"],
+    "target": "new",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["리로드"],
+    "target": "reload",
+    "strategy": "api"
+  },
+  {
     "aliases": ["세션"],
     "target": "session",
     "strategy": "prefill"

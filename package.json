@@ -1,6 +1,6 @@
 {
   "name": "pi-multilang-alias",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Multilingual and keyboard-layout aliases for Pi commands",
   "type": "module",
   "keywords": [
