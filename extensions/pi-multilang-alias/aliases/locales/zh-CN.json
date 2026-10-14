@@ -43,5 +43,25 @@
     "aliases": ["恢复", "继续"],
     "target": "resume",
     "strategy": "prefill"
+  },
+  {
+    "aliases": ["树"],
+    "target": "tree",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["分叉"],
+    "target": "fork",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["克隆"],
+    "target": "clone",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["快捷键"],
+    "target": "hotkeys",
+    "strategy": "prefill"
   }
 ]

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -68,6 +68,77 @@ test("custom quit and reload aliases invoke the direct API strategy", async () =
   assert.equal(await invokeDirectAlias(result.aliases[0]!, actions), true);
   assert.equal(await invokeDirectAlias(result.aliases[1]!, actions), true);
   assert.deepEqual(calls, ["reload", "shutdown"]);
+});
+
+const prefillAliasCases = [
+  ["layouts/ko-2set.json", {
+    tree: ["ㅅㄱㄷㄷ"], fork: ["래가"], clone: ["치ㅐㅜㄷ"], hotkeys: ["ㅙ사됸"],
+  }],
+  // Sebeolsik Final composes o+r as 채, n+e as 셔, o+t as 처, and k+e as 겨.
+  // hotkeys ends with y=ㄹ (initial consonant), s=ㄴ (final consonant), with no vowel between them.
+  ["layouts/ko-3-final.json", {
+    tree: ["ㅓㅐㅕㅕ"], fork: ["ㅏ채ㄱ"], clone: ["ㅔㅈㅊ셔"],
+    hotkeys: ["ㄴ처겨ㄹㄴ", "ㄴ처겨\u1105\u1160\u11ab"],
+  }],
+  ["locales/ko.json", {
+    tree: ["트리"], fork: ["포크"], clone: ["클론"], hotkeys: ["단축키"],
+  }],
+  ["locales/zh-CN.json", {
+    tree: ["树"], fork: ["分叉"], clone: ["克隆"], hotkeys: ["快捷键"],
+  }],
+] as const;
+
+for (const [file, expected] of prefillAliasCases) {
+  test(`${file}: navigation and hotkeys aliases use prefill and stay out of the root menu`, async () => {
+    const builtIn = JSON.parse(readFileSync(
+      new URL(`../extensions/pi-multilang-alias/aliases/${file}`, import.meta.url),
+      "utf8",
+    )) as AliasGroup[];
+    const aliases = mergeAliasGroups(builtIn);
+    const actions = {
+      reload: () => { assert.fail("must not reload"); },
+      shutdown: () => { assert.fail("must not shut down"); },
+    };
+
+    for (const [target, names] of Object.entries(expected)) {
+      assert.deepEqual(builtIn.filter((group) => group.target === target), [
+        { aliases: names, target, strategy: "prefill" },
+      ]);
+      for (const alias of names) {
+        const matches = aliases.filter((group) => group.aliases.includes(alias));
+        assert.deepEqual(matches, [{ aliases: [alias], target, strategy: "prefill" }]);
+        assert.equal(await invokeDirectAlias(matches[0]!, actions), false);
+      }
+    }
+
+    const canonicalItems = Object.keys(expected).map((value) => ({ value }));
+    const aliasNames = new Set(aliases.flatMap((group) => group.aliases));
+    const aliasItems = Object.values(expected).flatMap((names) =>
+      names.flatMap((value) => [{ value }, { value: `${value}:2` }]),
+    );
+    assert.deepEqual(filterRootSlashSuggestions([
+      ...canonicalItems, ...aliasItems,
+    ], aliasNames), canonicalItems);
+  });
+}
+
+test("custom navigation and hotkeys aliases also use the prefill strategy", () => {
+  const { agentDir, cwd } = fixture();
+  writeConfig(join(agentDir, "pi-multilang-alias.json"), {
+    "/history": "/tree",
+    "/branch": "/fork",
+    "/duplicate": "/clone",
+    "/shortcuts": "/hotkeys",
+  });
+
+  const result = loadCustomAliases({ cwd, configDirName: ".pi", agentDir });
+  assert.deepEqual(result.aliases, [
+    { aliases: ["history"], target: "tree", strategy: "prefill" },
+    { aliases: ["branch"], target: "fork", strategy: "prefill" },
+    { aliases: ["duplicate"], target: "clone", strategy: "prefill" },
+    { aliases: ["shortcuts"], target: "hotkeys", strategy: "prefill" },
+  ]);
+  assert.deepEqual(result.warnings, []);
 });
 
 test("malformed JSON and invalid entries warn without throwing", () => {

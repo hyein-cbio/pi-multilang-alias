@@ -43,5 +43,25 @@
     "aliases": ["계속"],
     "target": "resume",
     "strategy": "prefill"
+  },
+  {
+    "aliases": ["트리"],
+    "target": "tree",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["포크"],
+    "target": "fork",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["클론"],
+    "target": "clone",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["단축키"],
+    "target": "hotkeys",
+    "strategy": "prefill"
   }
 ]

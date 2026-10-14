@@ -41,7 +41,31 @@ Examples:
 /모델   -> /model
 /模型   -> /model
 /벼ㅑㅅ -> /quit       # Korean two-set layout
+/ㅅㄱㄷㄷ -> /tree     # Korean two-set layout
+/래가   -> /fork      # Korean two-set layout
 ```
+
+Tree and fork aliases are included for every supported locale and keyboard layout:
+
+| Locale / layout | `/tree` alias | `/fork` alias |
+|---|---|---|
+| Korean | `/트리` | `/포크` |
+| Simplified Chinese | `/树` | `/分叉` |
+| Korean two-set | `/ㅅㄱㄷㄷ` | `/래가` |
+| Korean three-set final | `/ㅓㅐㅕㅕ` | `/ㅏ채ㄱ` |
+
+For these aliases, press Enter once to replace the alias with `/tree` or `/fork`, then press Enter again to open Pi's built-in selector. Pi exposes APIs for navigating or forking from a specific entry, but no public API for opening these selectors, so these aliases use the same editor-prefill flow as other commands without a direct API.
+
+Clone and hotkeys aliases are also included:
+
+| Locale / layout | `/clone` alias | `/hotkeys` alias |
+|---|---|---|
+| Korean | `/클론` | `/단축키` |
+| Simplified Chinese | `/克隆` | `/快捷键` |
+| Korean two-set | `/치ㅐㅜㄷ` | `/ㅙ사됸` |
+| Korean three-set final | `/ㅔㅈㅊ셔` | `/ㄴ처겨ㄹㄴ` |
+
+These use the same two-Enter flow: the first Enter prefills `/clone` or `/hotkeys`, and the second executes Pi's built-in command. The three-set final hotkeys alias also accepts the conjoining-jamo form `ㄴ처겨\u1105\u1160\u11ab` emitted by libhangul-based input methods (Unicode escapes shown for clarity).
 
 All supported aliases are registered when the extension loads. Aliases stay out of the generic menu shown for `/`, but appear in autocomplete after you start typing one (for example, `/모` or `/벼`). The active input environment is detected again when an alias is invoked, allowing the current input source to change during a Pi session.
 

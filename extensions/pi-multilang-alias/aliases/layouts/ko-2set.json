@@ -43,5 +43,25 @@
     "aliases": ["ㄱㄷ녀ㅡㄷ"],
     "target": "resume",
     "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅅㄱㄷㄷ"],
+    "target": "tree",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["래가"],
+    "target": "fork",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["치ㅐㅜㄷ"],
+    "target": "clone",
+    "strategy": "prefill"
+  },
+  {
+    "aliases": ["ㅙ사됸"],
+    "target": "hotkeys",
+    "strategy": "prefill"
   }
 ]
