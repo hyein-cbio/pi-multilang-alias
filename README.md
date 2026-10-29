@@ -67,7 +67,40 @@ Clone and hotkeys aliases are also included:
 
 These use the same two-Enter flow: the first Enter prefills `/clone` or `/hotkeys`, and the second executes Pi's built-in command. The three-set final hotkeys alias also accepts the conjoining-jamo form `ㄴ처겨\u1105\u1160\u11ab` emitted by libhangul-based input methods (Unicode escapes shown for clarity).
 
-All supported aliases are registered when the extension loads. Aliases stay out of the generic menu shown for `/`, but appear in autocomplete after you start typing one (for example, `/모` or `/벼`). The active input environment is detected again when an alias is invoked, allowing the current input source to change during a Pi session.
+By default, all supported aliases are registered when the extension loads. Aliases stay out of the generic menu shown for `/`, but appear in autocomplete after you start typing one (for example, `/모` or `/벼`). The active input environment is detected again when an alias is invoked, allowing the current input source to change during a Pi session.
+
+## Choose alias languages and layouts
+
+Run `/alias-settings` in interactive TUI mode to choose which built-in alias groups to enable:
+
+```text
+> [✓] 한국어 — Korean
+  [ ] 简体中文 — Simplified Chinese
+  [✓] 두벌식 — Korean two-set
+  [ ] 세벌식 최종 — Korean three-set final
+```
+
+- Choose **Global** (all projects) or **Project** (only offered in trusted projects).
+- Use **↑/↓** to move and **Space** to toggle any number of checkmarks.
+- **Enter** saves and reloads extensions so disabled aliases are unregistered.
+- **Esc** cancels without saving.
+
+The selection is stored in the same config files used for custom aliases (below). Existing custom aliases and unrelated settings are preserved. A project selection replaces the global selection, so changing the global selection does not override an existing project selection.
+
+You can also edit the config directly:
+
+```json
+{
+  "enabledGroups": ["ko", "ko-2set"],
+  "aliases": {
+    "/exit": "/quit"
+  }
+}
+```
+
+Available group IDs are `ko`, `zh-CN`, `ko-2set`, and `ko-3-final`. Omitting `enabledGroups` inherits the lower-precedence selection (all groups by default); `[]` disables all built-in groups. Custom aliases remain enabled regardless of group selection. Invalid selections warn and fall back to the lower-precedence selection. Remove the project's `enabledGroups` field to restore global inheritance.
+
+`/alias-settings` remains available even when all groups are disabled and is reserved: it cannot be replaced by a custom alias. Changing a config file manually requires `/reload` or a fresh session.
 
 ## Custom aliases
 
@@ -104,6 +137,34 @@ Both alias names and targets must be non-empty slash-command names. Command argu
 Run `/reload` or start a fresh Pi session after changing a config file. Custom aliases targeting `/quit` or `/reload` use Pi's direct API, just like the built-ins, so they do not make an LLM request. Custom aliases also remain hidden from the generic `/` menu.
 
 `pi-exit-alias` can overlap with aliases such as `/exit`. Avoid installing both packages if duplicate command registrations are undesirable.
+
+### Personal shorthand macros (Korean and English)
+
+Aliases are not limited to Pi's native commands or translations. You can use them as personal shorthand for commands provided by other installed extensions. For example, if an extension provides `/review`, add Korean and English shortcuts to your own config:
+
+```json
+{
+  "aliases": {
+    "/검토": "/review",
+    "/ㄱㅌ": "/review",
+    "/rv": "/review",
+    "/check": "/review"
+  }
+}
+```
+
+After `/reload`, these shortcuts expand in the editor:
+
+```text
+/검토  → Enter → /review
+/ㄱㅌ  → Enter → /review
+/rv    → Enter → /review
+/check → Enter → /review
+```
+
+The first Enter replaces the shorthand with `/review`; inspect or edit it, then press Enter again to execute it. The extension providing `/review` must be installed and loaded: this package only expands the alias, not implements the target command.
+
+These are optional examples, not built-in aliases. Choose Korean or English names that do not conflict with your existing commands. This is single-command shorthand, not a multi-command macro engine: targets cannot include arguments or arbitrary prompt text, and arguments typed after an alias are currently not forwarded. You can add arguments manually after expansion, before the second Enter. Aliases targeting `/quit` or `/reload` are exceptions to the two-Enter flow and execute directly on the first Enter.
 
 ## Detection and test overrides
 

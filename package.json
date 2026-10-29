@@ -1,6 +1,6 @@
 {
   "name": "pi-multilang-alias",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Multilingual and keyboard-layout aliases for Pi commands",
   "type": "module",
   "keywords": [
@@ -34,6 +34,7 @@
     ]
   },
   "peerDependencies": {
-    "@earendil-works/pi-coding-agent": "*"
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
   }
 }

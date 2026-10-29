@@ -8,25 +8,33 @@ import {
   invokeDirectAlias,
   loadCustomAliases,
   mergeAliasGroups,
+  selectBuiltInAliases,
+  ALL_ALIAS_GROUP_IDS,
   type AliasGroup,
+  type AliasGroupId,
 } from "./config";
 import { detectEnvironment, readyMessage } from "./environment";
+import { registerAliasSettings } from "./settings";
 
-const builtInAliases = [
-  ...koLocaleAliases,
-  ...zhCnLocaleAliases,
-  ...ko2SetAliases,
-  ...ko3FinalAliases,
-] as AliasGroup[];
+const builtInAliases = {
+  ko: koLocaleAliases,
+  "zh-CN": zhCnLocaleAliases,
+  "ko-2set": ko2SetAliases,
+  "ko-3-final": ko3FinalAliases,
+} as Record<AliasGroupId, AliasGroup[]>;
 
 export default function (pi: ExtensionAPI) {
+  registerAliasSettings(pi);
   pi.on("session_start", (_event, ctx) => {
     const custom = loadCustomAliases({
       cwd: ctx.cwd,
       configDirName: CONFIG_DIR_NAME,
       includeProject: ctx.isProjectTrusted(),
     });
-    const aliases = mergeAliasGroups(builtInAliases, custom.aliases);
+    const aliases = mergeAliasGroups(
+      selectBuiltInAliases(builtInAliases, custom.enabledGroups ?? ALL_ALIAS_GROUP_IDS),
+      custom.aliases,
+    );
     const aliasNames = new Set(aliases.flatMap((group) => group.aliases));
 
     for (const warning of custom.warnings) {
@@ -35,8 +43,7 @@ export default function (pi: ExtensionAPI) {
       else console.warn(message);
     }
 
-    // The active input source can change after Pi starts. Register every alias
-    // up front so command availability is not frozen to the startup layout.
+    // Register all enabled groups, independent of the currently active input source.
     for (const group of aliases) {
       for (const alias of group.aliases) {
         pi.registerCommand(alias, {
